@@ -4,4 +4,4 @@ if __name__ == '__main__':
 
     db = DataController()
     db.init_database()
-    db.populate_next_launch()
+    db.populate_upcoming_launches()
