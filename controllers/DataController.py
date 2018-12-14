@@ -9,7 +9,7 @@ from models.Rocket import Rocket
 class DataController:
 
     def __init__(self):
-        self.request_controller = RequestController()
+        self.request_controller = RequestController
 
     def init_database(self):
 
