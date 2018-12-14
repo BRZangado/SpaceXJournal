@@ -4,10 +4,11 @@ from controllers.DataController import DataController
 class Console:
 
     db = DataController()
-    db.init_database()
 
     @classmethod
     def start(cls):
+
+        cls.db.init_database()
 
         print("\n\n")
         print(" ----- Bem vindo ao Space X Journal -----")
