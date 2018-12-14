@@ -4,7 +4,7 @@ db = peewee.SqliteDatabase('database.db')
 
 class LaunchSite(peewee.Model):
 
-    id = peewee.CharField()
+    id = peewee.CharField(primary_key = True)
     name = peewee.CharField()
     name_long = peewee.CharField()
 

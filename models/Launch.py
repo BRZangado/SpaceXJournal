@@ -15,22 +15,14 @@ class Launch(peewee.Model):
     past = peewee.SmallIntegerField(null = True)
     next = peewee.SmallIntegerField(null = True)
     latest = peewee.SmallIntegerField(null = True)
-    rocket = peewee.ForeignKeyField(
-        Rocket,
-        backref='Launchs'
-    )
-    launch_site = peewee.ForeignKeyField(
-        LaunchSite,
-        backref='Launchs'
-    )
+    rocket = peewee.ForeignKeyField(Rocket)
+    launch_site = peewee.ForeignKeyField(LaunchSite)
 
     def get_info(self):
 
         info = "Mission name: " + self.mission + "\n"
         info += "Flight Number: " + str(self.flight_number) + "\n"
         info += "Date: " + self.date + "\n"
-        info += self.rocket.get_info()
-        info += self.launch_site.get_info()
 
         return info
     

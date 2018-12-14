@@ -17,8 +17,6 @@ class DataController:
             Launch.create_table()
             LaunchSite.create_table()
             Rocket.create_table()
-            print("TABELAS CRIADAS")
-
         except peewee.OperationalError as err:
             print(err)
     
@@ -28,7 +26,7 @@ class DataController:
             launch = Launch.get(Launch.next == 1)
             return launch
         except Launch.DoesNotExist:
-            self.populate_next_launch()
+            return self.populate_next_launch()
     
     def get_latest_launch(self):
 
@@ -48,7 +46,7 @@ class DataController:
         return launches
     
     def get_past_launches(self):
-        
+
         launches = Launch.select().where(Launch.past == 1)
         if len(launches) == 0:
             print("buscando lançamentos")
@@ -65,7 +63,7 @@ class DataController:
             data,
             launchsite,
             rocket,
-            ['next', 'upcoming']
+            ['next']
         )
         return launch
     
@@ -78,7 +76,7 @@ class DataController:
             data,
             launchsite,
             rocket,
-            ['latest', 'past']
+            ['latest']
         )
         return launch
     
@@ -96,6 +94,7 @@ class DataController:
                 rocket,
                 ['past']
             )
+            print(launch.mission)
             saved_launches.append(launch)
         
         return saved_launches
@@ -114,26 +113,35 @@ class DataController:
                 rocket,
                 ['upcoming']
             )
+            print(launch.mission)
             saved_launches.append(launch)
         
         return saved_launches
     
     def save_rocket(self, data):
 
-        rocket = Rocket.create(
-            id=data['rocket_id'],
-            name=data['rocket_name'],
-            r_type=data['rocket_type']
-        )
+        try:
+            rocket = Rocket.create(
+                id=data['rocket_id'],
+                name=data['rocket_name'],
+                r_type=data['rocket_type']
+            )
+        except peewee.IntegrityError:
+            rocket = Rocket.get(Rocket.id == data['rocket_id'])
+
         return rocket
 
     def save_launch_site(self, data):
         
-        launch_site = LaunchSite.create(
-            id = data['site_id'],
-            name = data['site_name'],
-            name_long = data['site_name_long']
-        )
+        try:
+            launch_site = LaunchSite.create(
+                id = data['site_id'],
+                name = data['site_name'],
+                name_long = data['site_name_long']
+            )
+        except peewee.IntegrityError:
+            launch_site = LaunchSite.get(LaunchSite.id == data['site_id'])
+        
         return launch_site
 
     def save_launch(self, data, launch_site, rocket, status):
