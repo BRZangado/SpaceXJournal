@@ -22,6 +22,40 @@ class DataController:
         except peewee.OperationalError as err:
             print(err)
     
+    def get_next_launch(self):
+
+        try:
+            launch = Launch.get(Launch.next == 1)
+            return launch
+        except Launch.DoesNotExist:
+            self.populate_next_launch()
+    
+    def get_latest_launch(self):
+
+        try:
+            launch = Launch.get(Launch.latest == 1)
+            return launch
+        except Launch.DoesNotExist:
+            return self.populate_latest_launch()
+    
+    def get_upcoming_launches(self):
+
+        launches = Launch.select().where(Launch.upcoming == 1)
+        if len(launches) == 0:
+            print("buscando lançamentos")
+            return self.populate_upcoming_launches()
+        print("mostrando lançamentos")
+        return launches
+    
+    def get_past_launches(self):
+        
+        launches = Launch.select().where(Launch.past == 1)
+        if len(launches) == 0:
+            print("buscando lançamentos")
+            return self.populate_past_launches()
+        print("mostrando lançamentos")
+        return launches
+    
     def populate_next_launch(self):
 
         data = self.request_controller.request_next_launch()
@@ -33,7 +67,7 @@ class DataController:
             rocket,
             ['next', 'upcoming']
         )
-        print(launch.get_info())
+        return launch
     
     def populate_latest_launch(self):
 
@@ -46,11 +80,13 @@ class DataController:
             rocket,
             ['latest', 'past']
         )
-        print(launch.get_info())
+        return launch
     
     def populate_past_launches(self):
 
+        saved_launches = []
         data = self.request_controller.request_past_launches()
+
         for record in data:
             rocket = self.save_rocket(record.pop('rocket'))
             launchsite = self.save_launch_site(record.pop('launch_site'))
@@ -58,13 +94,17 @@ class DataController:
                 record,
                 launchsite,
                 rocket,
-                ['latest', 'past']
+                ['past']
             )
-            print(launch.get_info())
+            saved_launches.append(launch)
+        
+        return saved_launches
     
     def populate_upcoming_launches(self):
 
+        saved_launches = []
         data = self.request_controller.request_upcoming_launches()
+
         for record in data:
             rocket = self.save_rocket(record.pop('rocket'))
             launchsite = self.save_launch_site(record.pop('launch_site'))
@@ -72,9 +112,11 @@ class DataController:
                 record,
                 launchsite,
                 rocket,
-                ['latest', 'past']
+                ['upcoming']
             )
-            print(launch.get_info())
+            saved_launches.append(launch)
+        
+        return saved_launches
     
     def save_rocket(self, data):
 
