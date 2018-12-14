@@ -1,5 +1,6 @@
 from controllers.DataController import DataController
 
+
 class Console:
 
     db = DataController()
@@ -42,7 +43,7 @@ class Console:
             else:
                 print("\n\n")
                 print("Por favor, escolha uma opção válida")
-        
+
         print("\n\n")
         print("Obrigado por usar o Space X Journal!")
         print("---------------- =D --------------------")
@@ -50,7 +51,7 @@ class Console:
         print("Desenvolvido por Bruno Rodrigues Santos")
         print("E-mail: bruesmanbruesman@hotmail.com")
         print("Github: https://github.com/BRZangado")
-    
+
     @classmethod
     def print_launch(cls, launch):
         print("\n")

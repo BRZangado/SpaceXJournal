@@ -11,10 +11,10 @@ class Launch(peewee.Model):
     mission = peewee.CharField()
     flight_number = peewee.IntegerField()
     date = peewee.CharField()
-    upcoming = peewee.SmallIntegerField(null = True)
-    past = peewee.SmallIntegerField(null = True)
-    next = peewee.SmallIntegerField(null = True)
-    latest = peewee.SmallIntegerField(null = True)
+    upcoming = peewee.SmallIntegerField(null=True)
+    past = peewee.SmallIntegerField(null=True)
+    next = peewee.SmallIntegerField(null=True)
+    latest = peewee.SmallIntegerField(null=True)
     rocket = peewee.ForeignKeyField(Rocket)
     launch_site = peewee.ForeignKeyField(LaunchSite)
 
@@ -25,6 +25,6 @@ class Launch(peewee.Model):
         info += "Date: " + self.date + "\n"
 
         return info
-    
+
     class Meta:
         database = db
