@@ -10,9 +10,6 @@ class DataController:
 
     def __init__(self):
         self.request_controller = RequestController
-
-    def init_database(self):
-
         try:
             Launch.create_table()
             LaunchSite.create_table()

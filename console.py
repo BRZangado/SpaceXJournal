@@ -8,8 +8,6 @@ class Console:
     @classmethod
     def start(cls):
 
-        cls.db.init_database()
-
         print("\n\n")
         print(" ----- Bem vindo ao Space X Journal -----")
         print(" Confira os dados dos lançamentos da SpaceX ")
