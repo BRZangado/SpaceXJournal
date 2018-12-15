@@ -5,11 +5,11 @@ SpaceX Launches Journal
 The goal of the project is to visualize in a simplified way data obtained through the [Space X API](https://api.spacexdata.com/v3/launches/).
 
 Data obtained: <br>
-Next launch <br>
-Future launches <br>
-Latest launch <br>
-Past launches |
-Information on launches, rockets and launch site
+* Next launch
+* Future launches
+* Latest launch
+* Past launches
+* Information about launches, rockets and launch site
 
 ### Methodology
 
@@ -20,7 +20,7 @@ The applied methodology involves concepts of object oriented programming, clean 
 First, install the necessary dependencies
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 And then execute the program
@@ -32,7 +32,7 @@ python3 main.py
 ### Unittests
 
 ```
-python -m unittest discover tests
+python3 -m unittest discover tests
 ```
 
 ### Test Coverage
